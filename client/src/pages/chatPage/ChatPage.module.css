@@ -13,6 +13,7 @@
     display:flex;
     flex-direction: column;
     overflow-y: scroll;
+    background-color: rgb(238, 238, 154);
 }
 
 /* .chatsbox_self{
@@ -24,31 +25,35 @@
 } */
 
 .self{
+    /* border:1px solid yellow; */
+        border-radius: 1em;
+        width: 60%;
+        height: auto;
+        background-color: rgb(142, 222, 142);
+        color: black;
+        margin: 0.5em;
+        margin-left: 40%;
+        padding: 0.5em;
+        /* overflow-wrap: normal; */
     
-    border:1px solid red;
-    width:60%;
-    height:auto;
-    background-color: green;
-    color:white;
-    margin:0.5em;
-    /* padding:0.2em; */
-
-    /* overflow-wrap: normal; */
 }
 
 .others{
-    border:1px solid yellow;
-    width:60%;
-    height:auto;
-    background-color: blue;
-    color:white;
-    margin:0.5em;
-    /* padding:0.2em; */
-    /* overflow-wrap: normal; */
+
+    /* border:1px solid red; */
+        border-radius: 1em;
+        width: 60%;
+        height: auto;
+        background-color: white;
+        color: black;
+        margin: 0.5em;
+        padding: 0.5em;
+    
+        /* overflow-wrap: normal; */
 
 }
 .message{
-    border:1px solid black;
+    /* border:1px solid black; */
 }
 .author{
     font-weight: 700;
@@ -60,7 +65,7 @@
 
 .time{
     /* color:black; */
-    font-size:0.5em;
+    font-size:0.6em;
     /* border:1px solid black; */
 
 }
