@@ -4,9 +4,8 @@
   "description": "Real time chat app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-     "build": "vite build"
+    "start": "node server.js",
+    "devStart": "nodemon server.js",
   },
   "author": "Robin C Sharma",
   "license": "ISC",
