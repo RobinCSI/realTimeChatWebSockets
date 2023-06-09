@@ -21,7 +21,7 @@ export default function LandingPage({socket}){
   function handleUserInput(e){
     e.preventDefault()
     if(userName && chatRoomName){
-      socket.emit("join_room", chatRoomName)
+      socket.emit("join_room", { userName: userName, chatRoomName: chatRoomName })
     dispatch(addUser({chatRoom: chatRoomName, userName: userName}))
     navigate(`/chatPage/${chatRoomName}/${userName}`)
     }
