@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUser } from '../../redux/chatsSlice'
 
@@ -17,31 +17,34 @@ const ChatPage = ({socket}) => {
 
   const usersArr=useSelector(state=>state.users.value)
   const roomUsers=usersArr.filter(user=>user.chatRoom==chatRoomName)
-  const otherRoomUsers=roomUsers.filter(user=>user.userName!=userName)
+  const otherRoomUsers = roomUsers.filter(user => user.userName != userName)
+  
+  const bottomRef=useRef(null)
 
   function handleCurrentMessage(e){
     setCurrentMessage(e.target.value)
   }
 
   async function handleSendMessage(){
-    console.log(otherRoomUsers)
-    if(otherRoomUsers.length==0){
-      alert("No one is there to chat")
-    }
-    else{
+    // console.log(otherRoomUsers)
+    // if(otherRoomUsers.length==0){
+    //   alert("No one is there to chat")
+    // }
+    // else{
     if(currentMessage){
-      const messageData={
-        room: chatRoomName, 
-        author: userName, 
-        message: currentMessage, 
-        time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes()
-      }
+      const messageData = {
+        room: chatRoomName,
+        author: userName,
+        message: currentMessage,
+        // time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes()
+        time: new Date().toLocaleTimeString()
+      };
 
       await socket.emit("send_message", messageData)
       dispatch(addUser(messageData))
       
     }
-  }
+  // }
   setCurrentMessage('')
   }
 
@@ -54,31 +57,51 @@ const ChatPage = ({socket}) => {
 
     })
   }, [socket])
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({behaviour:'smooth'})
+  }, [roomChats]);
+
   return (
     <div className={styles.main_container}>
-      <h3>Live Chat</h3>
+      <h3>Chatroom {chatRoomName} (Live Chat)</h3>
       <div className={styles.chatsBox}>
-        
-        {roomChats.map((chat, index)=><div key={index} className={(chat.author==userName)? styles.self: styles.others}>
-          <div className={styles.message}>
-          <p >{chat.message}</p>
+        {roomChats.map((chat, index) => (
+          <div
+            key={index}
+            className={chat.author == userName ? styles.self : styles.others}
+          >
+            <div className={styles.message}>
+              <p>{chat.message}</p>
+            </div>
+            <div className={styles.metaMessage}>
+              <span className={styles.author}>{chat.author}</span>
+              <span className={styles.time}>{chat.time}</span>
+            </div>
+            {/* Creating a dummy div to scroll to bottom in chatbox. We can also use react scroll to bottom library. */}
+            <div ref={bottomRef} />
           </div>
-          <div className={styles.metaMessage}>
-          <span className={styles.author}>{chat.author}</span>
-          <span className={styles.time}>{chat.time}</span>
-          </div>
-          </div>)}
+        ))}
       </div>
       {/* {users.map((user, index)=><div key={index}><span>{user.chatRoom}</span><span>{user.userName}</span></div>)} */}
       <div>
-        <label>Write your message here: 
-        <input type="text" value={currentMessage} placeholder="Hello...." onChange={handleCurrentMessage}/>
+        <label>
+          {userName}, write your message here:
+          <input
+            type="text"
+            value={currentMessage}
+            placeholder="Hello...."
+            onChange={handleCurrentMessage}
+            onKeyDown={(e) => {
+              e.key == "Enter" && handleSendMessage();
+            }}
+          />
         </label>
         <button onClick={handleSendMessage}>&#9658;</button>
       </div>
       {/* {console.log(roomChats)} */}
     </div>
-  )
+  );
 }
 
 export default ChatPage

@@ -38,7 +38,7 @@ export default function LandingPage({socket}){
   return (
     <div className={styles.main_container}>
       <div className={styles.details_container}>
-        <h3>Enter details to chat with other people</h3>
+        <h3>Enter your details to chat with other people</h3>
         <form onSubmit={handleUserInput} className={styles.form}>
         <label>Your chat name: 
           <input type="text" onChange={handleUserName} placeholder="JDoe" />
