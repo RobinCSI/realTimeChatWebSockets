@@ -37,5 +37,5 @@ io.on("connection", (socket) => {
   });
 });
 
-// const PORT=5173 || process.env.PORT
-server.listen('https://real-time-chat-web-sockets.onrender.com/', () => console.log(`Server running on port https://real-time-chat-web-sockets.onrender.com/`));
+const PORT=process.env.PORT
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
