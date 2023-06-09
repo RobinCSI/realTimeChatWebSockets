@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addUser } from '../../redux/chatsSlice'
+import { addChat } from '../../redux/chatsSlice'
 
 import styles from './ChatPage.module.css'
 
@@ -41,7 +41,7 @@ const ChatPage = ({socket}) => {
       };
 
       await socket.emit("send_message", messageData)
-      dispatch(addUser(messageData))
+      dispatch(addChat(messageData));
       
     }
   // }
@@ -51,7 +51,7 @@ const ChatPage = ({socket}) => {
   useEffect(()=>{
     socket.on("receive_backendMessage", (data)=>{
       // console.log(data)
-      dispatch(addUser(data))
+      dispatch(addChat(data));
 
       
 

@@ -22,8 +22,8 @@ io.on("connection", (socket) => {
   //listening to join a room event
 
   socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User joined room: ${data}`);
+    socket.join(data.chatRoomName);
+    console.log(`User ${data.userName} joined room: ${data.chatRoomName}`);
   });
 
   //listening to send a message socket io event
